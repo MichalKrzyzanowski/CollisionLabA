@@ -21,6 +21,17 @@ public:
 		std::cout << "x:" << p.x << " y:" << p.y << " r:" << r << std::endl;
 	}
 };
+class Box
+{
+public:
+	Point p;
+	int w;
+	int h;
+	void print()
+	{
+		std::cout << "x:" << p.x << " y:" << p.y << " w:" << w << "h:" << h << std::endl;
+	}
+};
 
 int calculate_hypotenuse(Point a, Point b) {
 	int result = 0;
@@ -64,20 +75,29 @@ int main() {
 	npc_circle.p.y = rand() % 10 + 1;
 	npc_circle.r = rand() % 2 + 1;
 
+	// Box Collision
+	Box player_box;
+	player_box.p.x = rand() % 10 + 1;
+	player_box.p.y = rand() % 10 + 1;
+	player_box.w = rand() % 10 + 1;
+	player_box.h = rand() % 5 + 1;
 
-	while (true) {
 
-		// Point Collision check
+	while (true)
+	{
+
+		// Point->Point Collision check
 		if (calculate_hypotenuse(player_point, npc_point) == 0)
 		{
-			std::cout << "Point Collision" << std::endl;
+			std::cout << "Point->Point Collision" << std::endl;
 			player_point.print();
 			npc_point.print();
 			std::cin.get();
+			std::cout << std::string(100, '\n');
 		}
 		else
 		{
-			std::cout << "No Collision" << std::endl;
+			std::cout << "No Collision (Circle->Circle)" << std::endl;
 			player_point.print();
 			npc_point.print();
 		}
@@ -85,17 +105,32 @@ int main() {
 		player_point.x = rand() % 10 + 1;
 		player_point.y = rand() % 10 + 1;
 
-		// Circle Collision check
+		// Circle->Circle Collision check
 		if (calculate_hypotenuse(player_circle.p, npc_circle.p) < (player_circle.r + npc_circle.r))
 		{
-			std::cout << "Circle Collision" << std::endl;
+			std::cout << "Circle->Circle Collision" << std::endl;
 			player_circle.print();
 			npc_circle.print();
 			std::cin.get();
 		}
 		else
 		{
-			std::cout << "No Collision" << std::endl;
+			std::cout << "No Collision (Circle->Circle)" << std::endl;
+			player_circle.print();
+			npc_circle.print();
+		}
+
+		// Circle->Point Collision check
+		if (calculate_hypotenuse(player_circle.p, npc_point) < (player_circle.r))
+		{
+			std::cout << "Circle->Point Collision" << std::endl;
+			player_circle.print();
+			npc_point.print();
+			std::cin.get();
+		}
+		else
+		{
+			std::cout << "No Collision (Circle->Point)" << std::endl;
 			player_circle.print();
 			npc_circle.print();
 		}
