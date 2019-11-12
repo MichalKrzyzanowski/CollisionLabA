@@ -82,6 +82,12 @@ int main() {
 	player_box.w = rand() % 10 + 1;
 	player_box.h = rand() % 5 + 1;
 
+	Box npc_box;
+	npc_box.p.x = rand() % 10 + 1;
+	npc_box.p.y = rand() % 10 + 1;
+	npc_box.w = rand() % 10 + 1;
+	npc_box.h = rand() % 5 + 1;
+
 
 	while (true)
 	{
@@ -135,8 +141,28 @@ int main() {
 			npc_circle.print();
 		}
 
-		player_circle.p.x = rand() % 10 + 1;
-		player_circle.p.y = rand() % 10 + 1;
+		// Box->Box Collision check
+		if ((player_box.p.x + player_box.w >= npc_box.p.x) ||
+			(player_box.p.x <= npc_box.p.x + npc_box.w) ||
+			(player_box.p.y + player_box.h >= npc_box.p.y ||
+			(player_box.p.y <= npc_box.p.y + npc_box.h)))
+		{
+			std::cout << "Box->Box Collision" << std::endl;
+			player_box.print();
+			npc_box.print();
+			std::cin.get();
+		}
+		else
+		{
+			std::cout << "No Collision (Box->Box)" << std::endl;
+			player_box.print();
+			npc_box.print();
+		}
+
+		player_box.p.x = rand() % 10 + 1;
+		player_box.p.y = rand() % 10 + 1;
+		player_box.w = rand() % 10 + 1;
+		player_box.h = rand() % 5 + 1;
 
 	}
 
